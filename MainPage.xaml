@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="Notification_Sender_Windows.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Notification_Sender_Windows"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid
+        Background="#202020"
+        Width="853" Height="480">
+
+        <TextBlock x:Name="titleInstructionTextBlock" Text="Insert desired title for your notification." TextAlignment="Center" Margin="212,37,192,414" FontSize="18" FontWeight="Bold" FontFamily="Arial Rounded MT Bold"></TextBlock>
+        <TextBlock x:Name="messageInstructionTextBlock" Text="Insert desired message for your notification." TextAlignment="Center" Margin="212,144,192,307" FontSize="18" FontWeight="Bold" FontFamily="Arial Rounded MT Bold"/>
+        
+        <TextBox x:Name="titleTextBox" Margin="212,80,191,367"/>
+        <TextBox x:Name="bodyTextBox" Margin="212,181,191,154" AcceptsReturn="True"/>
+
+        <Button x:Name="sendNotificationButton" Click="SendNotification_Click" Margin="289,399,0,0" VerticalAlignment="Top" Height="55" Width="296" FontSize="24" FontWeight="Bold" FontFamily="Arial Black">Send Notification</Button>
+    </Grid>
+</Page>
