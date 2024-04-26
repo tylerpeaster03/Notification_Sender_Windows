@@ -26,6 +26,11 @@ namespace Notification_Sender_Windows
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        DateTimeOffset selectedDate;
+        TimeSpan selectedTime;
+        bool isScheduled = false;
+
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -37,12 +42,45 @@ namespace Notification_Sender_Windows
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
 
-        private void SendNotification_Click(object sender, RoutedEventArgs e)
+        private async void SendNotification_Click(object sender, RoutedEventArgs e)
         {
             string title = titleTextBox.Text;
             string body = bodyTextBox.Text;
+            var scheduledDateTime = selectedDate.Date + selectedTime;
 
-            SendNotification sendNotification = new SendNotification(title, body);
+            if (!isScheduled)
+            {
+                SendNotification sendNotification = new SendNotification(title, body);
+            }
+            else if (isScheduled)
+            {
+                if (scheduledDateTime < DateTime.Now)
+                {
+                    var dialog = new MessageDialog("Scheduled notification time cannot be before current time.", "Error");
+                    await dialog.ShowAsync();
+                }
+                else
+                {
+                    SendScheduledNotification sendScheduledNotification = new SendScheduledNotification(title, body, scheduledDateTime);
+                }
+            }
+
+        }
+
+        private void ScheduleCalendar_SelectedDatesChanged(object sender, CalendarViewSelectedDatesChangedEventArgs e)
+        {
+            // .Last() requires that something is selected
+            if (scheduleCalendar.SelectedDates.Any())
+            {
+                selectedDate = e.AddedDates.Last();
+                isScheduled = true;
+            }
+        }
+
+        private void ScheduleTimePicker_SelectedTimeChanged(object sender, TimePickerSelectedValueChangedEventArgs e)
+        {
+            selectedTime = e.NewTime.Value;
+            isScheduled = true;
         }
     }
 }

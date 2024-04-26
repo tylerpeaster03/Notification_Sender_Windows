@@ -5,19 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
-
 namespace Notification_Sender_Windows.Send_Notification
 {
-    public class SendNotification
+    public class SendScheduledNotification
     {
-        public SendNotification(string title, string body) 
+        public SendScheduledNotification(string title, string body, DateTime scheduledDateTime) 
         {
             new ToastContentBuilder()
                 .AddText(title)
                 .AddText(body)
-                .Show()
+                .Schedule(scheduledDateTime)
                 ;
         }
     }
