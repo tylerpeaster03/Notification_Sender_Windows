@@ -21,9 +21,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Notification_Sender_Windows
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         DateTimeOffset selectedDate;
@@ -51,17 +48,21 @@ namespace Notification_Sender_Windows
             if (!isScheduled)
             {
                 SendNotification sendNotification = new SendNotification(title, body);
+                var successDialog = new MessageDialog("Notification has been sent successfully", "Success");
+                await successDialog.ShowAsync();
             }
             else if (isScheduled)
             {
                 if (scheduledDateTime < DateTime.Now)
                 {
-                    var dialog = new MessageDialog("Scheduled notification time cannot be before current time.", "Error");
-                    await dialog.ShowAsync();
+                    var beforeCurrentTimeErrorDialog = new MessageDialog("Scheduled notification time cannot be before current time.", "Error");
+                    await beforeCurrentTimeErrorDialog.ShowAsync();
                 }
                 else
                 {
                     SendScheduledNotification sendScheduledNotification = new SendScheduledNotification(title, body, scheduledDateTime);
+                    var successScheduledMessageDialog = new MessageDialog("Notification has been scheduled successfully.", "Success");
+                    await successScheduledMessageDialog.ShowAsync();
                 }
             }
 
